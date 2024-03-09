@@ -48,19 +48,32 @@ class CBRBankSpider(scrapy.Spider):
         # 'https://cbr.ru/oper_br/',
 
         ## Финансовые рынки
-        'https://cbr.ru/banking_sector/',
-        'https://cbr.ru/RSCI/',
-        'https://cbr.ru/insurance/',
-        'https://cbr.ru/securities_market/',
-        'https://cbr.ru/issuers_corporate/',
-        'https://cbr.ru/microfinance/',
-        'https://cbr.ru/finm_infrastructure/',
-        'https://cbr.ru/ckki/',
+        # 'https://cbr.ru/banking_sector/',
+        # 'https://cbr.ru/RSCI/',
+        # 'https://cbr.ru/insurance/',
+        # 'https://cbr.ru/securities_market/',
+        # 'https://cbr.ru/issuers_corporate/',
+        # 'https://cbr.ru/microfinance/',
+        # 'https://cbr.ru/finm_infrastructure/',
+        # 'https://cbr.ru/ckki/',
 
         ## О Банке России
         # 'https://cbr.ru/about_br/',
         # 'https://cbr.ru/about_br/ip/',
         # 'https://cbr.ru/about_br/publ/',
+
+        ## Сервисы
+        ## Вопросы и ответы, Разъяснения, Личный кабинет участника информационного обмена, Требования и рекомендации к сайтам финансовых организаций, Удостоверяющий центр Банка России, Технические ресурсы
+        # "https://cbr.ru/faq/",
+        # "https://cbr.ru/explan/",
+        # "https://cbr.ru/lk_uio/",
+        # "https://cbr.ru/finorg/SiteRequirements/",
+        # "https://cbr.ru/certification_center_br/",
+        # "https://cbr.ru/development/",
+
+        ## Решения Банка России, Контактная информация
+        "https://cbr.ru/rbr/",
+        "https://cbr.ru/contacts/",
         ]
     # logger.info(f'{name=}')
     # logger.info(f'{start_urls=}')
@@ -71,7 +84,9 @@ class CBRBankSpider(scrapy.Spider):
 
         yield {'url': response.url,'title': title,'text': text,}
 
-        links = response.css('.page-nav_item')
+        # links = response.css('.page-nav_item')
+        # 
+        links = response.css('.map_block-li')
         for link in links:
             href = link.css('a::attr(href)').get()
             text = link.css('a::text').get().strip().replace('\xa0', ' ')
@@ -82,4 +97,17 @@ class CBRBankSpider(scrapy.Spider):
 
 
             yield {'url': _url,'title': _title,'text': text_without_markup}
+
+        # # for FAQ, Разъяснения
+        # links = response.css('.rubric_title')
+        # for link in links:
+        #     href = link.css('a::attr(href)').get()
+        #     text = link.css('a::text').get().strip().replace('\xa0', ' ')
+            
+        #     _url = self.domain + href
+        #     _title = text
+        #     text_without_markup = parse_page(_url, _title)
+
+
+        #     yield {'url': _url,'title': _title,'text': text_without_markup}
 
