@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 def parse_page(url, title):
     _response = requests.get(url)
     soup = BeautifulSoup(_response.text, 'html.parser')
-    text_without_markup = soup.get_text(strip=True).replace('\xa0', ' ')
+    text_without_markup = soup.get_text(strip=True).replace('\xa0', ' ').replace("\r\n", ' ')
     start_index = text_without_markup.find(title) + len(title)
     text_without_markup = text_without_markup[start_index:]
     start_index = text_without_markup.find(title) + len(title)
@@ -56,6 +56,11 @@ class CBRBankSpider(scrapy.Spider):
         'https://cbr.ru/microfinance/',
         'https://cbr.ru/finm_infrastructure/',
         'https://cbr.ru/ckki/',
+
+        ## О Банке России
+        # 'https://cbr.ru/about_br/',
+        # 'https://cbr.ru/about_br/ip/',
+        # 'https://cbr.ru/about_br/publ/',
         ]
     # logger.info(f'{name=}')
     # logger.info(f'{start_urls=}')
