@@ -1,3 +1,5 @@
-elasticsearch
-elasticsearch-haystack
-qdrant-haystack<2.0.0
+haystack-ai
+pgvector-haystack
+accelerate
+sentence-transformers
+datasets
