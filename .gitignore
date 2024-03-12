@@ -11,3 +11,5 @@ __pycache__/
 
 
 semantic_search/data/*
+legal_acts
+legal_acts.zip
