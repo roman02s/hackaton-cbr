@@ -14,33 +14,46 @@ def save_uploaded_file(uploaded_file):
         print(e)
         return False
 
+def call_api_with_file(file_path):
+    # Здесь должен быть ваш код для вызова API с файлом
+    pass
+
 def main():
-    st.title("Поиск и загрузка файлов")
+    st.title("Выбор функции, загрузка файлов и поиск")
+
+    # Выбор между загрузкой файлов и дополнительным полем ввода
+    choice = st.radio("Выберите функцию:", ('Загрузка файлов', 'Дополнительное поле ввода'))
+
+    # Загрузка файлов
+    if choice == 'Загрузка файлов':
+        uploaded_files = st.file_uploader("Перетащите файлы сюда или нажмите для выбора", 
+                                          accept_multiple_files=True)
+
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                st.write("Выбранный файл:", uploaded_file.name)
+            
+            if st.button("Обработать файлы"):
+                for uploaded_file in uploaded_files:
+                    if save_uploaded_file(uploaded_file):
+                        file_path = os.path.join("uploaded_files", uploaded_file.name)
+                        call_api_with_file(file_path)
+                        st.success(f"Файл {uploaded_file.name} обработан")
+                    else:
+                        st.error(f"Ошибка при сохранении файла {uploaded_file.name}")
+
+    # Дополнительное поле ввода
+    elif choice == 'Дополнительное поле ввода':
+        additional_input = st.text_area("Введите дополнительный текст")
 
     # Поисковая строка
-    query = st.text_input("Введите запрос для поиска")
+    query = st.text_input("Введите запрос для поиска", key="search_query")
 
-    # Обработка запроса (простая заглушка, тут должна быть ваша логика поиска)
-    if query:
-        st.write(f"Результаты поиска для запроса: {query}")
-
-    # Создание виджета для загрузки файлов
-    uploaded_files = st.file_uploader("Перетащите файлы сюда или нажмите для выбора", 
-                                      accept_multiple_files=True)
-
-    # Отображение выбранных файлов и кнопка для их сохранения
-    if uploaded_files:
-        for uploaded_file in uploaded_files:
-            st.write("Выбранный файл:", uploaded_file.name)
-        
-        if st.button("Сохранить файлы"):
-            success = True
-            for uploaded_file in uploaded_files:
-                if not save_uploaded_file(uploaded_file):
-                    success = False
-                    st.error(f"Ошибка при сохранении файла {uploaded_file.name}")
-            if success:
-                st.success("Все файлы успешно сохранены")
+    # Кнопка отправки запроса
+    if st.button("Отправить запрос", key="send_query"):
+        # Обработка запроса (простая заглушка, здесь должна быть ваша логика поиска)
+        if query:
+            st.write(f"Результаты поиска для запроса: {query}")
 
 if __name__ == "__main__":
     main()
