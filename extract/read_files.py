@@ -15,4 +15,4 @@ def processor(path):
     return ''
 
 
-print(processor('/Users/rustemkhakim/PycharmProjects/hack-purple/hackaton-cbr/тест.doc'))
+print(processor('14.docx'))
