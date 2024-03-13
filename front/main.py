@@ -3,17 +3,10 @@ import os
 
 def save_uploaded_file(uploaded_file):
     try:
-        # Определение пути к директории текущего скрипта
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
-
-        # Путь к директории для сохранения файлов
         upload_dir = os.path.join(current_script_dir, "uploaded_files")
-
-        # Проверка существования папки и создание, если она не существует
         if not os.path.exists(upload_dir):
             os.makedirs(upload_dir)
-
-        # Сохранение файла
         with open(os.path.join(upload_dir, uploaded_file.name), "wb") as f:
             f.write(uploaded_file.getbuffer())
         return True
@@ -22,7 +15,14 @@ def save_uploaded_file(uploaded_file):
         return False
 
 def main():
-    st.title("Загрузка и сохранение файлов")
+    st.title("Поиск и загрузка файлов")
+
+    # Поисковая строка
+    query = st.text_input("Введите запрос для поиска")
+
+    # Обработка запроса (простая заглушка, тут должна быть ваша логика поиска)
+    if query:
+        st.write(f"Результаты поиска для запроса: {query}")
 
     # Создание виджета для загрузки файлов
     uploaded_files = st.file_uploader("Перетащите файлы сюда или нажмите для выбора", 
@@ -33,7 +33,6 @@ def main():
         for uploaded_file in uploaded_files:
             st.write("Выбранный файл:", uploaded_file.name)
         
-        # Кнопка для сохранения файлов
         if st.button("Сохранить файлы"):
             success = True
             for uploaded_file in uploaded_files:
