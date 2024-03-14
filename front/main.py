@@ -17,14 +17,10 @@ def save_uploaded_file(uploaded_file):
         return None
 
 def call_api_with_file(file_path):
-    # Здесь должен быть ваш код для вызова API с файлом
     pass
 
 def add_to_database(text):
     try:
-        # Ваш код для добавления текста в базу знаний
-
-        # Отправка текста на эндпоинт
         response = send_text_to_endpoint(text)
         return response
     except Exception as e:
