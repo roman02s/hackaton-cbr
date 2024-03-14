@@ -1,0 +1,18 @@
+FROM python:3.8-slim
+
+# Установка зависимостей
+RUN pip install streamlit requests
+
+# Копирование приложения в контейнер
+WORKDIR /app
+COPY . /app
+
+# Определение порта, на котором будет работать Streamlit
+EXPOSE 8501
+
+# Команда для запуска Streamlit-приложения
+CMD ["streamlit", "run", "--server.port", "8501", "main.py"]
+
+#  docker build -t front_cbr .
+# docker run -v "$(pwd)/uploaded_files:/app/uploaded_files"  -p 8502:8501 front_cbr
+# docker run -v "$(pwd)/uploaded_files:/app/uploaded_files"  -p 8502:8501 front_cbr streamlit run --server.port 8501 main_1.py
